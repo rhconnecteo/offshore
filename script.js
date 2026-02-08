@@ -2,7 +2,7 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyvNYCgJTFVPJXPOwrpEBnS-19OgD2dRIBe7o13h6gUpQxXF9b4stgWSUjEDkoXuFZuLw/exec";
 
 // ================= LOGIN =================
-const users = [{ username: "admin", password: "picmvola" }];
+const users = [{ username: "admin", password: "picoff" }];
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnLogin = document.getElementById("btnLogin");
@@ -302,3 +302,4 @@ document.addEventListener("input", e => {
     commentError.style.display = "none";
   }
 });
+
