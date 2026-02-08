@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion des Compétences - OFFSHORE</title>
+   <link rel="icon" href="mvola.jpg" type="image/jpg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+<div class="login">
+<div class="space-bg">
+    <div class="stars"></div>
+    <div class="moon"></div>
+    <div class="planet planet-1"></div>
+    <div class="planet planet-2"></div>
+    <div class="planet planet-3"></div>
+    <div class="planet planet-4"></div>
+    <div class="planet planet-5"></div>
+    <div class="planet planet-6"></div>
+    <div class="planet planet-7"></div>
+    <div class="planet planet-8"></div>
+</div>
+  <div class="slogan" id="sloganText">
+  Chaque expérience est unique
+  </div>
+<div id="loginContainer" class="login-container">
+<img src="mvola.jpg" class="logo" alt="Open" style="width:100px;margin-bottom:10px;">
+  <h2 class="pic">Pic du Collaborateur OFFSHORE</h2>
+  <label>Nom d'utilisateur</label>
+  <input type="text" id="username" placeholder="Nom d'utilisateur">
+  <label>Mot de passe</label>
+  <input type="password" id="password" placeholder="Mot de passe">
+  <button id="btnLogin">Se connecter</button>
+  <div id="loginError" style="display:none;color:#ef4444;margin-top:10px;">
+    Identifiants incorrects
+  </div>
+</div>
+</div>
+<div class="container" id="mainContainer" style="display:none;">
+
+<header class="header">
+  <h1 class="main-title">Gestion des Compétences</h1>
+  <p class="subtitle">Évaluation des compétences par collaborateur</p>
+</header>
+
+<div class="form-grid">
+  <div class="card">
+    <label class="label">Service</label>
+    <select id="sheetName" class="select" onchange="loadCollaborateurs()">
+      <option value="Conseiller Client TERSEA">Conseiller Client TERSEA</option>
+      <option value="Conseiller client (B4B)">Conseiller client (B4B)</option>
+      <option value="Coach production MANPOWER">Coach production MANPOWER</option>
+      <option value="Coach Qualité et formation">Coach Qualité et formation</option> 
+      <option value="Coach Production JOKO/ELM">Coach Production JOKO/ELM</option> 
+      <option value="Coach production (B4B)">Coach production (B4B)</option> 
+      <option value="Responsable de plateau">Responsable de plateau</option> 
+      <option value="Responsable processus et achats">Responsable processus et achats</option> 
+      <option value="Responsable qualité et formation">Responsable qualité et formation</option> 
+      <option value="Testeur qualité">Testeur qualité</option> 
+      <option value="Vigie">Vigie</option> 
+      <option value="Conseiller client JOKO">Conseiller client JOKO</option> 
+      <option value="Manager coach qualité et formation JOKO/ELM">Manager Coach Qualité et Formation JOKO/ELM</option>
+      <option value="Vigie">Vigie</option> 
+      <option value="Conseiller client ELM le BLANC">Conseiller client ELM le BLANC</option> 
+      <option value="Conseiller client MANPOWER">Conseiller client MANPOWER</option> 
+    </select>
+  </div>
+
+  <div class="card">
+    <label class="label">Collaborateur</label>
+    <select id="matricule" class="select" disabled></select>
+  </div>
+</div>
+
+<div id="info" class="info-card" style="display:none;">
+  <div class="info-grid">
+    <div><strong>Matricule</strong><span id="i_matricule"></span></div>
+    <div><strong>Nom</strong><span id="i_nom"></span></div>
+    <div><strong>Fonction</strong><span id="i_fonction"></span></div>
+    <div><strong>Ancienneté</strong><span id="i_anciennete"></span></div>
+    <div><strong>Ancien poste</strong><span id="i_ancienPoste"></span></div>
+  </div>
+</div>
+
+<div id="statusBanner" style="display:none;"></div>
+
+<h2 id="competenceTitle" class="section-title" style="display:none;">
+  Évaluation des compétences
+</h2>
+
+<div id="competenceContainer" class="competences-grid"></div>
+
+<button id="btnSave" class="btn-primary" style="display:none;" onclick="save()">
+  Enregistrer
+</button>
+
+<div id="successMessage" class="success-banner" style="display:none;">
+  ✔ Enregistrement effectué avec succès
+</div>
+
+<div id="errorMessage" class="success-banner" style="display:none;background:#f59e0b;">
+  Veuillez évaluer au moins une compétence
+</div>
+
+</div>
+
+<!-- MODAL RÉCAP -->
+<!-- MODAL RÉCAP -->
+<div id="recapModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2 style="color: rgba(9, 240, 9, 0.856); text-align:center;">Récapitulatif</h2>
+    <div style="
+      background: #fffbeb;          /* jaune très très pâle, doux */
+      border: 2px solid #fbbf24;    /* orange clair et léger */
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(251, 191, 36, 0.12);  /* ombre ultra-douce */
+    ">
+      <h4 style="margin: 0 0 16px; color: #854d0e; font-size: 1.2rem; font-weight: 600;">
+        Dernière vérification avant enregistrement.
+      </h4>
+      
+      <p style="margin: 0 0 14px; color: #713f12; line-height: 1.5; font-size: 1.05rem;">
+        Vérifiez attentivement les compétences sélectionnées.<br>
+        <strong style="color: #9c4a00;">Aucun retour en arrière possible après validation.</strong> 😊
+      </p>
+      
+      <p style="margin: 0; color: #713f12;">
+        N’hésitez pas aussi à indiquer en commentaire la raison pour laquelle vous avez choisi ces compétences pour votre équipe, <span style="color: #02580e; font-weight: bold;">cela nous aide vraiment à mieux comprendre vos choix.</span><br>
+        Merci beaucoup 🙏
+      </p>
+    </div>
+    <!-- Résumé des compétences -->
+    <div id="recapContent"></div>
+
+    <!-- COMMENTAIRE -->
+    
+
+    <div class="recap-comment">
+  <label>Commentaires</label>
+  <textarea 
+  id="commentaire" 
+  placeholder="Écris vos commentaires ici... ✨"
+  rows="6"
+></textarea>
+  <div id="commentError" class="comment-error" style="display:none;">
+    Le commentaire est obligatoire.
+  </div>
+</div>
+
+
+    <!-- ACTIONS -->
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeRecap()">Annuler</button>
+      <button class="btn-primary" onclick="confirmSave()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
